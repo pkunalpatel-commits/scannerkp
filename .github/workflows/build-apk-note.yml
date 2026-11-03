@@ -1,0 +1,57 @@
+name: Android APK (Limitations)
+
+# IMPORTANT READ THIS FIRST
+# -------------------------
+# This project is a professional desktop application written with
+# Python + PySide6 (Qt). It is designed for Windows/Linux/macOS.
+#
+# Building a real, production Android APK that:
+#   - monitors hundreds of F&O contracts in real time
+#   - keeps multi-timeframe OI baselines
+#   - runs continuous WebSocket feeds
+#   - has a complex sortable table UI
+#
+# is NOT a simple "add a workflow" task. The UI must be rewritten
+# (Kivy, Flutter, or native Kotlin) and the architecture changed
+# for Android background service limits, battery, and network.
+#
+# This workflow only documents the situation and provides a
+# placeholder for future Android work. It does NOT produce a
+# working APK of the current desktop scanner.
+
+on:
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "This workflow does not build a functional APK"
+        required: false
+        default: "See job logs"
+
+jobs:
+  inform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain limitations
+        run: |
+          echo "========================================================"
+          echo " Android APK for this project is not generated here"
+          echo "========================================================"
+          echo ""
+          echo "Current stack: Python 3 + PySide6 (desktop Qt)"
+          echo "Target: Real-time multi-stock OI scanner with WebSocket"
+          echo ""
+          echo "To create a proper Android app you need to:"
+          echo "  1. Rewrite the UI (Kivy / Flutter / Jetpack Compose)"
+          echo "  2. Move heavy logic to a foreground service"
+          echo "  3. Handle Android WebSocket + doze mode carefully"
+          echo "  4. Use Buildozer / Chaquopy / BeeWare or full native"
+          echo ""
+          echo "Recommended path for now:"
+          echo "  - Use the Windows EXE workflow (build-windows.yml)"
+          echo "  - Or run the Python app on a VPS / local PC"
+          echo "  - Mobile can later show a filtered view via REST API"
+          echo ""
+          echo "If you want a mobile companion, open an issue and we"
+          echo "can design a lightweight Flutter/Kivy frontend that"
+          echo "talks to a desktop/server instance of this scanner."
+          echo "========================================================"
