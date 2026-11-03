@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+*.spec
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project data (do not commit secrets or large CSVs)
+data/*.db
+data/*.csv
+data/user_settings.json
+logs/*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials – NEVER commit
+.env
+*.token
+credentials.json
