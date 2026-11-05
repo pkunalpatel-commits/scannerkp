@@ -15,11 +15,11 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from loguru import logger
 from PySide6.QtCore import QObject, QThread, Signal, Slot, QTimer
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 from config.settings import LOG_DIR, APP_NAME
+from core.logger import logger, _HAS_LOGURU
 from core.dhan_auth import DhanAuth
 from core.instrument_master import InstrumentMaster
 from core.expiry_manager import ExpiryManager
@@ -35,14 +35,21 @@ from ui.dashboard import Dashboard, run_app
 
 
 # ---------------------------------------------------------------------
-# Logging
+# Logging (file handler only when loguru is present)
 # ---------------------------------------------------------------------
-logger.add(
-    LOG_DIR / "scanner_{time:YYYY-MM-DD}.log",
-    rotation="1 day",
-    retention="14 days",
-    level="INFO",
-)
+if _HAS_LOGURU:
+    try:
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        logger.add(
+            LOG_DIR / "scanner_{time:YYYY-MM-DD}.log",
+            rotation="1 day",
+            retention="14 days",
+            level="INFO",
+        )
+    except Exception:
+        pass
+else:
+    logger.info("loguru not available – using standard logging")
 
 
 class ScannerWorker(QObject):

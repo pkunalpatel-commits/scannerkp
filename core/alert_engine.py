@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Deque, Dict, List, Optional, Set, Tuple
 
-from loguru import logger
+from core.logger import logger
 
 try:
     from plyer import notification

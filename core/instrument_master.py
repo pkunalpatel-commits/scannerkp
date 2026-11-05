@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Set, Tuple
 
 import pandas as pd
 import requests
-from loguru import logger
+from core.logger import logger
 
 from config.settings import INSTRUMENT_MASTER_PATH, DATA_DIR
 

@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional, Set
 
 import websockets
-from loguru import logger
+from core.logger import logger
 
 from config.settings import DHAN_FEED_WS
 from core.subscription_manager import SubscriptionManager

@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Optional
 
-from loguru import logger
+from core.logger import logger
 from sqlalchemy import (
     Column,
     DateTime,

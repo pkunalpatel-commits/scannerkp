@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass
 from typing import Optional
 
-from loguru import logger
+from core.logger import logger
 
 try:
     from dhanhq import DhanContext, dhanhq

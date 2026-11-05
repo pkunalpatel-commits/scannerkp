@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Set
 
-from loguru import logger
+from core.logger import logger
 
 from core.atm_strike_manager import ATMStrikeManager, ATMSelection
 from core.instrument_master import InstrumentMaster, OptionContract

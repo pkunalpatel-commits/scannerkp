@@ -8,7 +8,7 @@ from __future__ import annotations
 from datetime import date, timedelta
 from typing import List, Optional
 
-from loguru import logger
+from core.logger import logger
 
 from core.instrument_master import InstrumentMaster
 

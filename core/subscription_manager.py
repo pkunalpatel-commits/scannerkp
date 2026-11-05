@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Set, Tuple
 
-from loguru import logger
+from core.logger import logger
 
 from config.settings import MAX_INSTRUMENTS_PER_SUBSCRIBE_MSG, MAX_INSTRUMENTS_PER_WS
 from core.instrument_master import OptionContract

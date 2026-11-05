@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Dict, List, Optional, Set, Tuple
 
-from loguru import logger
+from core.logger import logger
 
 from core.instrument_master import InstrumentMaster, OptionContract
 from core.expiry_manager import ExpiryManager

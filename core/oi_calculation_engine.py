@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
 
-from loguru import logger
+from core.logger import logger
 
 from config.settings import TIMEFRAMES
 

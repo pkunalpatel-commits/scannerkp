@@ -30,9 +30,18 @@ jobs:
             --add-data "config;config" `
             --add-data "ui;ui" `
             --add-data "core;core" `
+            --hidden-import=loguru `
+            --hidden-import=core.logger `
             --hidden-import=PySide6.QtCore `
             --hidden-import=PySide6.QtGui `
             --hidden-import=PySide6.QtWidgets `
+            --hidden-import=sqlalchemy `
+            --hidden-import=pandas `
+            --hidden-import=numpy `
+            --hidden-import=requests `
+            --hidden-import=websockets `
+            --collect-all=loguru `
+            --collect-all=PySide6 `
             main.py
 
       - name: Upload EXE artifact
