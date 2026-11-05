@@ -18,26 +18,28 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install core dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install PySide6 loguru pandas numpy SQLAlchemy requests websockets aiosqlite python-dateutil pytz plyer
+          pip install dhanhq || echo "dhanhq optional for build"
           pip install pyinstaller
 
-      - name: Verify PySide6 is installed
+      - name: Verify critical packages
         run: |
-          python -c "import PySide6; print('PySide6:', PySide6.__version__, PySide6.__file__)"
+          python -c "import PySide6; print('PySide6', PySide6.__version__)"
           python -c "import shiboken6; print('shiboken6 OK')"
           python -c "import loguru; print('loguru OK')"
+          python -c "from PySide6.QtWidgets import QApplication; print('QtWidgets OK')"
 
-      - name: Build with .spec file (collects all Qt libs)
+      - name: Build with .spec
         run: |
           pyinstaller --noconfirm --clean NSE_OI_Scanner.spec
 
-      - name: Show output size
+      - name: Show size
         run: |
-          Get-ChildItem -Recurse dist\NSE_OI_Scanner | Measure-Object -Property Length -Sum
-          Get-ChildItem dist\NSE_OI_Scanner | Select-Object Name, Length
+          Get-ChildItem dist\NSE_OI_Scanner -Recurse | Measure-Object -Property Length -Sum | Select-Object Count, @{N='SizeMB';E={[math]::Round($_.Sum/1MB,1)}}
+          Get-ChildItem dist\NSE_OI_Scanner | Format-Table Name, Length -AutoSize
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
