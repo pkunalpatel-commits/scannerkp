@@ -24,54 +24,24 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build onedir EXE (recommended)
+      - name: Verify PySide6 is installed
         run: |
-          pyinstaller --noconfirm --windowed --name "NSE_OI_Scanner" `
-            --add-data "config;config" `
-            --add-data "ui;ui" `
-            --add-data "core;core" `
-            --hidden-import=loguru `
-            --hidden-import=core.logger `
-            --hidden-import=PySide6 `
-            --hidden-import=PySide6.QtCore `
-            --hidden-import=PySide6.QtGui `
-            --hidden-import=PySide6.QtWidgets `
-            --hidden-import=sqlalchemy.sql.default_comparator `
-            --hidden-import=pandas `
-            --hidden-import=numpy `
-            --hidden-import=requests `
-            --hidden-import=websockets `
-            --collect-all=loguru `
-            --collect-all=PySide6 `
-            --collect-all=sqlalchemy `
-            main.py
+          python -c "import PySide6; print('PySide6:', PySide6.__version__, PySide6.__file__)"
+          python -c "import shiboken6; print('shiboken6 OK')"
+          python -c "import loguru; print('loguru OK')"
 
-      - name: Upload onedir artifact
+      - name: Build with .spec file (collects all Qt libs)
+        run: |
+          pyinstaller --noconfirm --clean NSE_OI_Scanner.spec
+
+      - name: Show output size
+        run: |
+          Get-ChildItem -Recurse dist\NSE_OI_Scanner | Measure-Object -Property Length -Sum
+          Get-ChildItem dist\NSE_OI_Scanner | Select-Object Name, Length
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: NSE_OI_Scanner-Windows
           path: dist/NSE_OI_Scanner/
-          retention-days: 14
-
-      - name: Build single-file EXE (slower startup)
-        run: |
-          pyinstaller --noconfirm --windowed --onefile --name "NSE_OI_Scanner_OneFile" `
-            --add-data "config;config" `
-            --add-data "ui;ui" `
-            --add-data "core;core" `
-            --hidden-import=loguru `
-            --hidden-import=core.logger `
-            --hidden-import=PySide6 `
-            --hidden-import=PySide6.QtCore `
-            --hidden-import=PySide6.QtGui `
-            --hidden-import=PySide6.QtWidgets `
-            --collect-all=loguru `
-            --collect-all=PySide6 `
-            main.py
-
-      - name: Upload onefile artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NSE_OI_Scanner-OneFile
-          path: dist/NSE_OI_Scanner_OneFile.exe
           retention-days: 14
